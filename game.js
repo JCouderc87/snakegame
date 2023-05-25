@@ -44,27 +44,71 @@ class Snake {
     }
 
     moveLeft(){
-        this.positionX--;
+       // if (this.positionX + this.width > 3){
+            this.positionX--;
+        //}
         this.domElement.style.left = this.positionX + "vw";
     }
     moveRight(){
-        if (this.positionX + this.width < 70){
+       // if (this.positionX + this.width < 70){
             this.positionX++; 
-        }
+        //}
         this.domElement.style.left = this.positionX + "vw";
     }
     moveUp(){
-        this.positionY++;
+       // if (this.positionY + this.height < 100 ){ 
+            this.positionY++;
+        //}
         this.domElement.style.bottom = this.positionY + "vh";
     }
     moveDown(){
-        this.positionY--;
+        //if (this.positionY + this.height  -4){
+            this.positionY--;
+        //}
         this.domElement.style.bottom = this.positionY + "vh";
     }
 }
+
+
+class Food {
+    constructor(){
+        this.positionX = 20; // random posX
+        this.positionY = 20; //random posY
+        this.width = 3;
+        this.height = 5;
+                    
+
+        this.domElement = null;
+
+        this.createDomElement();
+    }
+                
+                
+    createDomElement(){
+        this.domElement = document.createElement("div")
+        this.domElement.id = "food";
+        this.domElement.style.width = this.width + "vw";
+        this.domElement.style.height = this.height + "vh";
+        this.domElement.style.left = this.positionX + "vw";
+        this.domElement.style.bottom = this.positionY + "vh";
+                        
+                    
+                    
+        const parentElm = document.getElementById("board");
+        parentElm.appendChild(this.domElement);
+    }
+}
+
+let food = new Food();
+
 const snake = new Snake();
 
 setInterval(() => {
+    if ((snake.positionX <0) || (snake.positionX + snake.width > 70) || (snake.positionY + snake.height > 100 ) || (snake.positionY < 3))
+     {
+       console.log("Game over");
+      location.href = './gameover.html';
+    }
     if (snake.direction === "Right"){
         snake.moveRight();
     }
@@ -77,11 +121,17 @@ setInterval(() => {
     if (snake.direction === "Up"){
         snake.moveUp();
     }
- }, 200);
 
+    // check collision with food
+    /* 
+        if collision = true
+        food.domElement.remove()
+        food = null
+        food = new Food ()
+    */
+ }, 100);
 
-
-document.addEventListener("keydown", (event) => {
+ document.addEventListener("keydown", (event) => {
     console.log(event.key)
 
     if (event.key === "ArrowLeft"){
@@ -98,38 +148,21 @@ document.addEventListener("keydown", (event) => {
                     }
                 })
 
-class Food {
-    constructor(){
-        this.positionX = 20;
-        this.positionY = 20;
-        this.width = 3;
-        this.height = 5;
-                    
+// if (this.positionX + this.width < 3){
+//     this.positionX--;
+// }{ return "game over"}
+// if (this.positionX + this.width < 70){
+//     this.positionX++;}
+//  {return "game over"}
+// if (this.positionY + this.height > 100 ){ 
+//     this.positionY++;}{
+//     return "game over"}
+//  if (this.positionY + this.height < 5){
+//         this.positionY--;}{
+//     return "game over"}
 
-    this.domElement = null;
+// if ((this.positionX + this.width < 3) || (this.positionX + this.width < 70) || (this.positionY + this.height > 100 ) ||(this.positionY + this.height < 5))
+//       {
+//         console.log("Game over")
 
-    this.createDomElement();
-    }
-                
-                
-createDomElement(){
-    this.domElement = document.createElement("div")
-    this.domElement.id = "food";
-    this.domElement.style.width = this.width + "vw";
-    this.domElement.style.height = this.height + "vh";
-    this.domElement.style.left = this.positionX + "vw";
-    this.domElement.style.bottom = this.positionY + "vh";
-                    
-                
-                
-const parentElm = document.getElementById("board");
-    parentElm.appendChild(this.domElement);
-}
-}
 
-const food = new Food();
-
-    // const time ();
-    // if (moveUp = setInterval(() => {
-        
-    // }, interval);
